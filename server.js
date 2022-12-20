@@ -39,7 +39,7 @@ const server = app.listen(
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    orgin: "http://localhost:3000",
+    orgin: "https://resplendent-crumble-b58d24.netlify.app",
   },
 });
 
