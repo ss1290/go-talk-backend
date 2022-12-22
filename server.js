@@ -9,7 +9,6 @@ import messageRoutes from "./routes/messageRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import cors from "cors";
 import chatRoutes from "./routes/chatRoutes.js";
-import path from "path";
 
 const app = express();
 dotenv.config();
@@ -21,6 +20,7 @@ app.use(cors());
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+
 
 // deployment
 const __dirname1 = path.resolve();
@@ -36,6 +36,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+
 app.use(notFound);
 app.use(errorHandler);
 
@@ -50,7 +51,7 @@ const users = {};
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    orgin: "http://localhost:3000",
+    orgin: "https://resplendent-crumble-b58d24.netlify.app",
   },
 });
 
