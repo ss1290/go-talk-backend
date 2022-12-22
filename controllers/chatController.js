@@ -20,7 +20,7 @@ export const accessChat = asyncHandler(async (req, res) => {
       { users: { $elemMatch: { $eq: userId } } },
     ],
     //match both user that is login currently
-    // and chat receiver
+    // and chat receivers
   })
     .populate("users", "-password")
     .populate("latestMessage");

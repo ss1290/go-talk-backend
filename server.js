@@ -22,21 +22,20 @@ app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
-//deployment
+// deployment
 const __dirname1 = path.resolve();
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "../go-talk-frontend/build")));
+  app.use(express.static(path.join(__dirname1, "./build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname1, "../go-talk-frontend", "build", "index.html")
-    );
+    res.sendFile(path.resolve(__dirname1, "./build", "index.html"));
   });
 } else {
   app.get("/", (req, res) => {
     res.send("API is running successfully");
   });
 }
+
 app.use(notFound);
 app.use(errorHandler);
 
@@ -47,6 +46,7 @@ const server = app.listen(
   console.log(`Server listening on port ${PORT}`.yellow.bold)
 );
 
+const users = {};
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
@@ -63,6 +63,7 @@ io.on("connection", (socket) => {
 
   socket.on("setup", (userData) => {
     socket.join(userData._id);
+
     socket.emit("connected");
   });
   socket.on("join chat", (room) => {
